@@ -11,6 +11,9 @@ buildscript {
 
             // service locator
             koinVersion              : '2.0.1',
+
+            // navigation
+            navVersion              : '2.3.0',
     ]
     repositories {
         google()
