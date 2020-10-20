@@ -34,7 +34,7 @@ abstract class BaseFragment : Fragment(),
         container: ViewGroup?
     ): T = DataBindingUtil.inflate(inflater, resId, container, false)
 
-    abstract fun initListeners()
-
     abstract fun initComponents()
+
+    abstract fun initListeners()
 }

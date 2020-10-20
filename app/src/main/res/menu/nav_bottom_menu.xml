@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/chatFragment"
+        android:contentDescription="@string/label_chat_home"
+        android:icon="@drawable/ic_chat"
+        android:title="@string/label_chat_home" />
+    <item
+        android:id="@+id/groupFragment"
+        android:contentDescription="@string/label_group"
+        android:icon="@drawable/ic_group"
+        android:title="@string/label_group" />
+    <item
+        android:id="@+id/friendsFragment"
+        android:contentDescription="@string/label_friends"
+        android:icon="@drawable/ic_friends"
+        android:title="@string/label_friends" />
+    <item
+        android:id="@+id/settingsFragment"
+        android:contentDescription="@string/label_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/label_settings" />
+</menu>
