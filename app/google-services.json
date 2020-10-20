@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "549869064622",
+    "firebase_url": "https://appchat-dab1b.firebaseio.com",
+    "project_id": "appchat-dab1b",
+    "storage_bucket": "appchat-dab1b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549869064622:android:81dfa611787e3cb875b83f",
+        "android_client_info": {
+          "package_name": "com.sunasterisk.appchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549869064622-rm7p2f4uouanmp9cs9b16qtq743plrnr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sunasterisk.appchat",
+            "certificate_hash": "4b1af4cddf1b7caab05d27054648869122d05366"
+          }
+        },
+        {
+          "client_id": "549869064622-tinfeh63hccgpovohn1kk5590d7lvhfm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhohrBn_veY4nMHFgeYOp3POvxaa4P2jM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "549869064622-tinfeh63hccgpovohn1kk5590d7lvhfm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
