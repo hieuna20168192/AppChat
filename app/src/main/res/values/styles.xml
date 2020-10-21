@@ -4,4 +4,22 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="Widget.Demo.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextAppearance">@style/TextAppearance.Demo.TextInputLayout.HintText</item>
+        <item name="hintTextColor">@android:color/darker_gray</item>
+        <item name="android:paddingBottom">@dimen/dp_8</item>
+        <item name="boxStrokeColor">@color/colorRedLight</item>
+    </style>
+
+    <style name="TextAppearance.Demo.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="FacebookLoginButtonStyle">
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:paddingTop">@dimen/sp_10</item>
+        <item name="android:paddingBottom">@dimen/sp_10</item>
+    </style>
+
 </resources>

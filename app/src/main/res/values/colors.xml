@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#6f79a8</color>
     <color name="colorAccent">#d1d9ff</color>
     <color name="colorBlueDark">#49599a</color>
-    <color name="colorPinkPrimary">#fce4ec</color>
-    <color name="colorPinkDark">#c9b2ba</color>
+    <color name="colorPinkPrimary">#f8bbd0</color>
+    <color name="colorRedDark">#b90008</color>
+    <color name="colorRedLight">#ff795e</color>
+    <color name="colorIndigoPrimary">#e8eaf6</color>
 </resources>
