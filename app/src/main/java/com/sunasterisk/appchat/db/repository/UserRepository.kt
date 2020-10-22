@@ -1,11 +1,13 @@
 package com.sunasterisk.appchat.db.repository
 
 import com.sunasterisk.appchat.db.firebase.service.AuthService
+import com.sunasterisk.appchat.db.persistent.database.dao.ChatDao
 import com.sunasterisk.appchat.db.persistent.database.dao.UserDao
 
 class UserRepository(
     private val authService: AuthService,
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val chatDao: ChatDao,
 ) : Repository {
 
     override var isLoading = false

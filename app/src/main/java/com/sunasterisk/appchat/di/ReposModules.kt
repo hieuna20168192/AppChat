@@ -31,10 +31,11 @@ val repositoryModule = module {
 
     // Room Dao modules
     single { get<AppDatabase>().userDao() }
+    single { get<AppDatabase>().chatDao() }
 
     // Firebase modules
     single<AuthService> { AuthImpl(get(), get()) }
 
     // DataSource modules
-    single<Repository> { UserRepository(get(), get()) }
+    single<Repository> { UserRepository(get(), get(), get()) }
 }
