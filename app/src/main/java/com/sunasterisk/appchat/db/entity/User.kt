@@ -1,6 +1,7 @@
 package com.sunasterisk.appchat.db.entity
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
@@ -11,9 +12,12 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = TABLE_NAME)
 data class User(
     @PrimaryKey
-    val id: String = "",
+    @ColumnInfo(name = "user_id")
+    val userId: String = "",
+    @ColumnInfo(name = "user_name")
     val userName: String = "",
     val email: String = "",
+    @ColumnInfo(name = "profile_url")
     val profileUrl: String = "",
     @Ignore
     val groupIds: List<String> = emptyList(),
@@ -22,7 +26,7 @@ data class User(
 ) : Parcelable {
 
     constructor(user: User) : this(
-        user.id,
+        user.userId,
         user.userName,
         user.email,
         user.profileUrl,
@@ -31,6 +35,6 @@ data class User(
     )
 
     companion object {
-        const val TABLE_NAME = "user"
+        const val TABLE_NAME = "User"
     }
 }
