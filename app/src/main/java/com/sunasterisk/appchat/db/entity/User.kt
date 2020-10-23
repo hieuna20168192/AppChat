@@ -16,23 +16,14 @@ data class User(
     val userId: String = "",
     @ColumnInfo(name = "user_name")
     val userName: String = "",
-    val email: String = "",
+    val email: String? = "",
     @ColumnInfo(name = "profile_url")
-    val profileUrl: String = "",
+    var profileUrl: String = "",
     @Ignore
     val groupIds: List<String> = emptyList(),
     @Ignore
     val chatIds: List<String> = emptyList(),
 ) : Parcelable {
-
-    constructor(user: User) : this(
-        user.userId,
-        user.userName,
-        user.email,
-        user.profileUrl,
-        user.groupIds,
-        user.chatIds
-    )
 
     companion object {
         const val TABLE_NAME = "User"

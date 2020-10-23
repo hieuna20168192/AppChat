@@ -20,4 +20,6 @@
     <string name="facebook_app_id">3372377532841706</string>
     <string name="fb_login_protocol_scheme">fb3372377532841706</string>
     <string name="label_sign_in_button">Sign In with Google</string>
+
+    <string name="msg_account_has_been_existed">User has been registered!</string>
 </resources>
