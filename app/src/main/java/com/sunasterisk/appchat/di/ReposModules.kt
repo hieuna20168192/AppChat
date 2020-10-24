@@ -3,6 +3,7 @@ package com.sunasterisk.appchat.di
 import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.sunasterisk.appchat.db.firebase.client.AuthImpl
 import com.sunasterisk.appchat.db.firebase.service.AuthService
 import com.sunasterisk.appchat.db.persistent.database.AppDatabase
@@ -19,6 +20,7 @@ val repositoryModule = module {
     // Firebase modules
     single { FirebaseAuth.getInstance() }
     single { FirebaseFirestore.getInstance() }
+    single { FirebaseStorage.getInstance() }
 
     // Room database modules
     single {
@@ -34,7 +36,7 @@ val repositoryModule = module {
     single { get<AppDatabase>().chatDao() }
 
     // Firebase modules
-    single<AuthService> { AuthImpl(get(), get()) }
+    single<AuthService> { AuthImpl(get(), get(), get()) }
 
     // DataSource modules
     single<Repository> { UserRepository(get(), get(), get()) }
