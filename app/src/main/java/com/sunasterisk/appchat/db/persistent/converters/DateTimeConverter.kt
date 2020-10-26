@@ -1,7 +1,7 @@
 package com.sunasterisk.appchat.db.persistent.converters
 
 import androidx.room.TypeConverter
-import java.util.*
+import java.util.Date
 
 class DateTimeConverter {
     @TypeConverter
@@ -10,5 +10,5 @@ class DateTimeConverter {
 
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? =
-        date?.time?.toLong()
+        date?.time
 }

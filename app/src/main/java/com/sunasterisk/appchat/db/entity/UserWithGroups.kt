@@ -11,7 +11,7 @@ data class UserWithGroups(
         entityColumn = "group_id",
         associateBy = Junction(UserGroupCrossRef::class)
     )
-    val chats: List<Group>
+    val groups: List<Group>
 )
 
 data class GroupWithUsers(

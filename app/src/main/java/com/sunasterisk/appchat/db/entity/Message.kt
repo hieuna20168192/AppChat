@@ -5,33 +5,33 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
-import java.util.*
+import java.util.Date
 
 @Parcelize
 @Entity
 data class Message(
     @PrimaryKey
     @ColumnInfo(name = "message_id")
-    val messageId: String = "",
+    var messageId: String = "",
     @ColumnInfo(name = "message_type")
-    val messageType: String = "",
+    var messageType: String = "",
     @ColumnInfo(name = "chat_type")
-    val chatType: String = "",
+    var chatType: String = "",
     @ColumnInfo(name = "content_type")
-    val contentType: String = "",
-    val file: String = "",
+    var contentType: String = "",
+    var file: String = "",
     @ColumnInfo(name = "from_id")
-    val fromId: String = "",
+    var fromId: String = "",
     @ColumnInfo(name = "image_url")
-    val imageUrl: String = "",
-    val message: String = "",
-    val status: Int = 0,
-    val date: Date?,
+    var imageUrl: String = "",
+    var message: String = "",
+    var status: Int = 0,
+    var date: Date? = null,
     @ColumnInfo(name = "to_id")
-    val toId: String = "",
-    val video: String = "",
+    var toId: String = "",
+    var video: String = "",
     @ColumnInfo(name = "from_chat_id")
-    val fromChatId: String,
+    var fromChatId: String = "",
     @ColumnInfo(name = "from_group_id")
-    val fromGroupId: String,
+    var fromGroupId: String = "",
 ) : Parcelable

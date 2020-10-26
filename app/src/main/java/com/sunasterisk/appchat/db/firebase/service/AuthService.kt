@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface AuthService {
     fun logIn(username: String, password: String): Flow<Result<AuthResult>>
-    fun firebaseSignInWithGoogle(googleAuthCredential: AuthCredential): Flow<Result<User>>
+    fun firebaseSignInWithCredential(googleAuthCredential: AuthCredential): Flow<Result<User>>
     suspend fun createUserInFireStoreIfNotExists(authenticatedUser: User): Result<User>
     fun register(
         username: String,

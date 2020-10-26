@@ -13,16 +13,18 @@ import kotlinx.android.parcel.Parcelize
 data class User(
     @PrimaryKey
     @ColumnInfo(name = "user_id")
-    val userId: String = "",
+    var userId: String = "",
     @ColumnInfo(name = "user_name")
-    val userName: String = "",
-    val email: String? = "",
+    var userName: String = "",
+    var email: String? = "",
     @ColumnInfo(name = "profile_url")
     var profileUrl: String = "",
     @Ignore
     val groupIds: List<String> = emptyList(),
     @Ignore
     val chatIds: List<String> = emptyList(),
+    @Ignore
+    val friendIds: List<String> = emptyList(),
 ) : Parcelable {
 
     companion object {
