@@ -22,4 +22,9 @@
     <string name="label_sign_in_button">Sign In with Google</string>
 
     <string name="msg_account_has_been_existed">User has been registered!</string>
+
+    <plurals name="last_message_chat_id">
+        <item quantity="other">%1$s_recent_message</item>
+    </plurals>
+
 </resources>

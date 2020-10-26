@@ -14,6 +14,8 @@ import com.sunasterisk.appchat.db.persistent.database.dao.UserDao
         Chat::class,
         Group::class,
         Message::class,
+        UserChatCrossRef::class,
+        UserGroupCrossRef::class,
     ],
     version = DatabaseConstant.DATABASE_VERSION,
     exportSchema = false

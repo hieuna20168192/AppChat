@@ -3,28 +3,26 @@ package com.sunasterisk.appchat.db.entity
 import android.os.Parcelable
 import androidx.room.*
 import kotlinx.android.parcel.Parcelize
-import java.util.*
+import java.util.Date
 
 @Parcelize
 @Entity(tableName = Group.TABLE_NAME)
 data class Group(
     @PrimaryKey
     @ColumnInfo(name = "group_id")
-    val groupId: String = "",
+    var groupId: String = "",
     @ColumnInfo(name = "admin_id")
-    val adminId: String = "",
+    var adminId: String = "",
     @ColumnInfo(name = "admin_name")
-    val adminName: String = "",
+    var adminName: String = "",
     @ColumnInfo(name = "created_at")
-    val createdAt: Date?,
+    var createdAt: Date? = null,
     @ColumnInfo(name = "group_icon")
-    val groupIcon: String = "",
+    var groupIcon: String = "",
     @Ignore
     val memberIds: List<String> = emptyList(),
-    val name: String = "",
-    @ColumnInfo(name = "last_message")
-    @Embedded
-    val recentMessage: Message
+    var name: String = "",
+    var description: String = "",
 ) : Parcelable {
 
     companion object {

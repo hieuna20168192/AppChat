@@ -9,12 +9,11 @@ import kotlinx.android.parcel.Parcelize
 data class Chat(
     @PrimaryKey
     @ColumnInfo(name = "chat_id")
-    val chatId: String = "",
+    var chatId: String = "",
     @Ignore
     val memberIds: List<String> = emptyList(),
-    @ColumnInfo(name = "last_message")
     @Embedded
-    val recentMessage: Message
+    var recentMessage: Message? = null
 ) : Parcelable {
 
     companion object {

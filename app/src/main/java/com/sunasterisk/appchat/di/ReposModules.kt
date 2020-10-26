@@ -5,11 +5,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.sunasterisk.appchat.db.firebase.client.AuthImpl
+import com.sunasterisk.appchat.db.firebase.client.ClientImpl
 import com.sunasterisk.appchat.db.firebase.service.AuthService
+import com.sunasterisk.appchat.db.firebase.service.ClientService
 import com.sunasterisk.appchat.db.persistent.database.AppDatabase
 import com.sunasterisk.appchat.db.persistent.database.DatabaseConstant
+import com.sunasterisk.appchat.db.repository.AuthRepository
+import com.sunasterisk.appchat.db.repository.ClientRepository
 import com.sunasterisk.appchat.db.repository.Repository
-import com.sunasterisk.appchat.db.repository.UserRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -37,7 +40,9 @@ val repositoryModule = module {
 
     // Firebase modules
     single<AuthService> { AuthImpl(get(), get(), get()) }
+    single<ClientService> { ClientImpl(get()) }
 
     // DataSource modules
-    single<Repository> { UserRepository(get(), get(), get()) }
+    single<Repository.AuthRepository> { AuthRepository(get(), get()) }
+    single<Repository.ClientRepository> { ClientRepository(get(), get(), get()) }
 }

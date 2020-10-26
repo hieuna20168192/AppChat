@@ -2,7 +2,6 @@ package com.sunasterisk.appchat.db.firebase.client
 
 import android.net.Uri
 import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthEmailException
 import com.google.firebase.firestore.CollectionReference
@@ -19,31 +18,31 @@ import com.sunasterisk.appchat.db.firebase.service.AuthService
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
-import java.util.*
+import java.util.UUID
 
 @ExperimentalCoroutinesApi
 class AuthImpl(
     private val firebaseAuth: FirebaseAuth,
-    private val fireStore: FirebaseFirestore,
+    fireStore: FirebaseFirestore,
     private val firebaseStorage: FirebaseStorage,
 ) : AuthService {
 
     private val usersRef: CollectionReference = fireStore.collection(COLLECTION_USER)
 
     override fun logIn(username: String, password: String) =
-        flow<Result<AuthResult>> {
+        flow {
             firebaseAuth.signInWithEmailAndPassword(username, password).await().run {
                 if (user?.isEmailVerified == false) {
                     val throwable =
                         FirebaseAuthEmailException(EMAIL_NOT_VERIFIED, MSG_EMAIL_NOT_VERIFIED)
-                    error(Result.Failed(throwable))
+                    error(throwable)
                 } else {
                     emit(Result.Success(this))
                 }
             }
         }
 
-    override fun firebaseSignInWithGoogle(googleAuthCredential: AuthCredential) =
+    override fun firebaseSignInWithCredential(googleAuthCredential: AuthCredential) =
         flow {
             firebaseAuth.signInWithCredential(googleAuthCredential).await().run {
                 val isNewUser = additionalUserInfo?.isNewUser ?: false
@@ -52,11 +51,7 @@ class AuthImpl(
                         val authenticatedUser =
                             User(userId = it.uid, email = it.email)
                         val signInResult = createUserInFireStoreIfNotExists(authenticatedUser)
-                        if (signInResult is Result.Success) {
-                            emit(signInResult)
-                        } else if (signInResult is Result.Failed) {
-                            error(signInResult)
-                        }
+                        emit(signInResult)
                     }
                 }
             }
