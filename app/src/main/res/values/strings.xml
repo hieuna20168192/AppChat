@@ -9,13 +9,22 @@
     <string name="title_login">Sign In to continue!</string>
     <string name="title_welcome">Welcome,</string>
 
+    <string name="title_sign_up">Sign Up to get started!</string>
+    <string name="title_welcome_sign_up">Create Account,</string>
+
     <string name="msg_hint_email">Email</string>
-    <string name="msg_hint_password">password</string>
+    <string name="msg_hint_password">Password</string>
+    <string name="msg_hint_confirm_password">Confirm password</string>
+
 
     <string name="title_login_button">Login</string>
+    <string name="title_sign_up_button">Create Account</string>
 
     <string name="msg_login_description">"I'm a new user, "</string>
     <string name="msg_login_description_route">Sign up</string>
+
+    <string name="msg_sign_up_description">"I'm ready a member, "</string>
+    <string name="msg_sign_up_description_route">Sign in</string>
 
     <string name="facebook_app_id">3372377532841706</string>
     <string name="fb_login_protocol_scheme">fb3372377532841706</string>
