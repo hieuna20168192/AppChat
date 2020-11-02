@@ -1,11 +1,11 @@
 package com.sunasterisk.appchat.ui.auth
 
 import com.sunasterisk.appchat.R
-import com.sunasterisk.appchat.base.BaseActivity
+import com.sunasterisk.appchat.base.BaseFragment
 
-class SignInActivity : BaseActivity() {
+class SignInFragment : BaseFragment() {
 
-    override val layoutResource = R.layout.activity_sign_in
+    override val layoutResource = R.layout.fragment_sign_in
 
     override fun initComponents() = Unit
 
