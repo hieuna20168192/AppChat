@@ -4,13 +4,15 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
-import com.sunasterisk.appchat.App
 import com.sunasterisk.appchat.db.Result
 import com.sunasterisk.appchat.db.entity.Chat
 import com.sunasterisk.appchat.db.entity.Group
 import com.sunasterisk.appchat.db.entity.Message
 import com.sunasterisk.appchat.db.entity.User
-import com.sunasterisk.appchat.db.firebase.RemoteConstant
+import com.sunasterisk.appchat.db.firebase.RemoteConstant.COLLECTION_CHAT
+import com.sunasterisk.appchat.db.firebase.RemoteConstant.COLLECTION_GROUP
+import com.sunasterisk.appchat.db.firebase.RemoteConstant.COLLECTION_RECENT_MESSAGE_CHAT
+import com.sunasterisk.appchat.db.firebase.RemoteConstant.COLLECTION_USER
 import com.sunasterisk.appchat.db.firebase.RemoteConstant.getLastMessageId
 import com.sunasterisk.appchat.db.firebase.service.ClientService
 import kotlinx.coroutines.*
@@ -24,11 +26,9 @@ class ClientImpl(
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ClientService {
 
-    private val appResource = App.getContext().resources
-    private val usersRef: CollectionReference = fireStore.collection(RemoteConstant.COLLECTION_USER)
-    private val chatsRef: CollectionReference = fireStore.collection(RemoteConstant.COLLECTION_CHAT)
-    private val groupsRef: CollectionReference =
-        fireStore.collection(RemoteConstant.COLLECTION_GROUP)
+    private val usersRef: CollectionReference = fireStore.collection(COLLECTION_USER)
+    private val chatsRef: CollectionReference = fireStore.collection(COLLECTION_CHAT)
+    private val groupsRef: CollectionReference = fireStore.collection(COLLECTION_GROUP)
 
     override fun getChats(userId: String): Flow<Result<List<Chat>>> =
         callbackFlow {
@@ -44,7 +44,7 @@ class ClientImpl(
                     chats.clear()
                     val chatFlow = chatIds.asFlow().buffer().onEach { chatId ->
                         val recentChatMessageRef = chatsRef.document(chatId)
-                            .collection(RemoteConstant.COLLECTION_RECENT_MESSAGE_CHAT)
+                            .collection(COLLECTION_RECENT_MESSAGE_CHAT)
 
                         val lastMessageId = getLastMessageId(chatId)
                         val chatDeferred = chatsRef.document(chatId).get().await().toObject<Chat>()

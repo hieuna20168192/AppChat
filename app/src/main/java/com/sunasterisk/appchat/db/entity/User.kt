@@ -15,7 +15,7 @@ data class User(
     @ColumnInfo(name = "user_id")
     var userId: String = "",
     @ColumnInfo(name = "user_name")
-    var userName: String = "",
+    var userName: String? = "",
     var email: String? = "",
     @ColumnInfo(name = "profile_url")
     var profileUrl: String = "",

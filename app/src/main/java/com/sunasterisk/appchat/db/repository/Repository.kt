@@ -1,7 +1,9 @@
 package com.sunasterisk.appchat.db.repository
 
 import android.net.Uri
-import com.google.firebase.auth.AuthCredential
+import com.facebook.AccessToken
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.sunasterisk.appchat.db.Result
 import com.sunasterisk.appchat.db.entity.Chat
@@ -12,7 +14,8 @@ import kotlinx.coroutines.flow.Flow
 interface Repository {
     interface AuthRepository {
         fun logIn(username: String, password: String): Flow<Result<AuthResult>>
-        fun firebaseSignInWithCredential(googleAuthCredential: AuthCredential): Flow<Result<User>>
+        fun signInWithGoogle(task: Task<GoogleSignInAccount>): Flow<Result<User>>
+        fun loginWithFacebook(token: AccessToken): Flow<Result<User>>
         fun register(
             username: String,
             password: String,

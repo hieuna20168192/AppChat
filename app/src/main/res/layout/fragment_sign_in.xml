@@ -135,6 +135,7 @@
         <com.shobhitpuri.custombuttons.GoogleSignInButton
             android:id="@+id/signInButtonGoogle"
             isVisible="@{!signInViewModel.isLoading()}"
+            onListenerGoogleSignIn="@{signInViewModel.listenerGoogleSignIn}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
@@ -150,6 +151,9 @@
             android:id="@+id/loginButtonFacebook"
             style="@style/FacebookLoginButtonStyle"
             isVisible="@{!signInViewModel.isLoading()}"
+            listenerFacebookLogin="@{signInViewModel.listenerFacebookLogin}"
+            registerCallback="@{signInViewModel.callbackFacebookManager}"
+            readPermissions="@{signInViewModel.permissionLiveData}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
