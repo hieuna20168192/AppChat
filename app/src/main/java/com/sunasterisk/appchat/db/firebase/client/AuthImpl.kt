@@ -7,13 +7,12 @@ import com.google.firebase.auth.FirebaseAuthEmailException
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.sunasterisk.appchat.App
-import com.sunasterisk.appchat.R
 import com.sunasterisk.appchat.db.Result
 import com.sunasterisk.appchat.db.entity.User
 import com.sunasterisk.appchat.db.firebase.RemoteConstant.COLLECTION_USER
 import com.sunasterisk.appchat.db.firebase.RemoteConstant.EMAIL_NOT_VERIFIED
 import com.sunasterisk.appchat.db.firebase.RemoteConstant.MSG_EMAIL_NOT_VERIFIED
+import com.sunasterisk.appchat.db.firebase.RemoteConstant.MSG_USER_HAS_BEEN_EXISTED
 import com.sunasterisk.appchat.db.firebase.service.AuthService
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
@@ -65,11 +64,7 @@ class AuthImpl(
                     return Result.success(authenticatedUser)
                 }
             } else {
-                return Result.failed(
-                    Throwable(
-                        App.getContext().resources.getString(R.string.msg_account_has_been_existed)
-                    )
-                )
+                return Result.failed(Throwable(MSG_USER_HAS_BEEN_EXISTED))
             }
         }
     }

@@ -5,13 +5,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.sunasterisk.appchat.App
-import com.sunasterisk.appchat.R
 import com.sunasterisk.appchat.db.Result
 import com.sunasterisk.appchat.db.entity.Chat
 import com.sunasterisk.appchat.db.entity.Group
 import com.sunasterisk.appchat.db.entity.Message
 import com.sunasterisk.appchat.db.entity.User
 import com.sunasterisk.appchat.db.firebase.RemoteConstant
+import com.sunasterisk.appchat.db.firebase.RemoteConstant.getLastMessageId
 import com.sunasterisk.appchat.db.firebase.service.ClientService
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
@@ -46,11 +46,7 @@ class ClientImpl(
                         val recentChatMessageRef = chatsRef.document(chatId)
                             .collection(RemoteConstant.COLLECTION_RECENT_MESSAGE_CHAT)
 
-                        val lastMessageId = appResource.getQuantityString(
-                            R.plurals.last_message_chat_id,
-                            appResource.getInteger(R.integer.integer_1),
-                            chatId
-                        )
+                        val lastMessageId = getLastMessageId(chatId)
                         val chatDeferred = chatsRef.document(chatId).get().await().toObject<Chat>()
 
                         val lastMessageDeferred = recentChatMessageRef.document(lastMessageId).get()
