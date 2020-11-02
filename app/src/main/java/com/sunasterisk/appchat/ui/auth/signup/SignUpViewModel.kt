@@ -50,7 +50,7 @@ class SignUpViewModel(
         val imageUri = imageProfileLiveData.value
             ?: Uri.parse(
                 "android.resource://" + App.getContext().packageName
-                        + "/" + R.drawable.ic_arrow_back_24
+                        + "/" + R.drawable.img_default_profile
             )
         authRepository.register(email, password, imageUri)
             .onEach { authResult ->

@@ -20,6 +20,8 @@ data class Message(
     @ColumnInfo(name = "content_type")
     var contentType: String = "",
     var file: String = "",
+    @ColumnInfo(name = "from_user")
+    var fromUser: String = "",
     @ColumnInfo(name = "from_id")
     var fromId: String = "",
     @ColumnInfo(name = "image_url")

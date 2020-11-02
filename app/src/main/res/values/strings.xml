@@ -33,6 +33,8 @@
     <string name="msg_email_invalid">Invalid email format</string>
     <string name="msg_password_invalid">Invalid password format</string>
     <string name="msg_confirm_password_unmatched">Those passwords didn\'t match. Try again!</string>
+    <string name="title_hint_search">Search…</string>
+    <string name="title_chat_messages">Messages</string>
 
     <plurals name="last_message_chat_id">
         <item quantity="other">%1$s_recent_message</item>

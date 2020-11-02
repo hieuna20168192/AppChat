@@ -5,6 +5,7 @@
     <dimen name="dp_4">4dp</dimen>
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
     <dimen name="dp_64">64dp</dimen>
     <dimen name="dp_128">128dp</dimen>
 
