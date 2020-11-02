@@ -14,6 +14,9 @@ buildscript {
 
             // navigation
             navVersion              : '2.3.0',
+
+            // lottie
+            lottieVersion    : '3.4.0',
     ]
     repositories {
         google()

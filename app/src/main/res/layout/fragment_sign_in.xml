@@ -6,14 +6,28 @@
     <data>
 
 
-
-
+        <variable
+            name="signInViewModel"
+            type="com.sunasterisk.appchat.ui.auth.signin.SignInViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        showError="@{signInViewModel.isError()}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.auth.SignInFragment">
+        tools:context=".ui.auth.signin.SignInFragment">
+
+        <com.airbnb.lottie.LottieAnimationView
+            isVisible="@{signInViewModel.isLoading()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/flowInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewSubtitleSignIn"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/anim_loading" />
 
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flowInput"
@@ -21,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
             android:orientation="vertical"
-            app:constraint_referenced_ids="textInputLayoutEmail, textInputLayoutPassword"
+            app:constraint_referenced_ids="textInputLayoutEmailLogin, textInputLayoutPasswordLogin"
             app:layout_constraintBottom_toTopOf="@id/flowDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +46,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
-            app:constraint_referenced_ids="textViewDescription, textViewDescriptionRoute"
+            app:constraint_referenced_ids="textViewDescription, textViewSignUpRoute"
             app:flow_horizontalStyle="packed"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,6 +63,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/textViewSubtitleSignIn"
             style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,8 +73,9 @@
             app:layout_constraintTop_toBottomOf="@id/textViewWelcome" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutEmail"
+            android:id="@+id/textInputLayoutEmailLogin"
             style="@style/Widget.Demo.TextInputLayout"
+            onEmailError="@{signInViewModel.emailLiveData}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,12 +88,14 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/msg_hint_email"
                 android:inputType="textEmailAddress"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:text="@={signInViewModel.emailLiveData}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutPassword"
+            android:id="@+id/textInputLayoutPasswordLogin"
             style="@style/Widget.Demo.TextInputLayout"
+            onPasswordError="@{signInViewModel.passwordLiveData}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
@@ -86,15 +104,20 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputTextPassword"
+                android:id="@+id/inputEditTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/msg_hint_password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="@={signInViewModel.passwordLiveData}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButtonLogin"
+            inputEmail="@{inputEditTextEmail}"
+            inputPassword="@{inputEditTextPassword}"
+            isVisible="@{!signInViewModel.isLoading()}"
+            onListenerLogin="@{signInViewModel.listenerLogin}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
@@ -111,6 +134,7 @@
 
         <com.shobhitpuri.custombuttons.GoogleSignInButton
             android:id="@+id/signInButtonGoogle"
+            isVisible="@{!signInViewModel.isLoading()}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
@@ -123,7 +147,9 @@
             app:layout_constraintTop_toBottomOf="@id/materialButtonLogin" />
 
         <com.facebook.login.widget.LoginButton
+            android:id="@+id/loginButtonFacebook"
             style="@style/FacebookLoginButtonStyle"
+            isVisible="@{!signInViewModel.isLoading()}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
@@ -142,7 +168,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textViewDescriptionRoute"
+            android:id="@+id/textViewSignUpRoute"
             style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

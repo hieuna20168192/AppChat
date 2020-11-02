@@ -1,4 +1,4 @@
-package com.sunasterisk.appchat.ui.auth
+package com.sunasterisk.appchat.ui.auth.signup
 
 import com.sunasterisk.appchat.R
 import com.sunasterisk.appchat.base.BaseFragment
