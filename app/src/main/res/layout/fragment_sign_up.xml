@@ -5,12 +5,13 @@
 
     <data>
 
-
-
-
+        <variable
+            name="signUpViewModel"
+            type="com.sunasterisk.appchat.ui.auth.signup.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        showError="@{signUpViewModel.isError()}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.auth.signup.SignUpFragment">
@@ -47,9 +48,11 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageViewProfilePick"
+            imageUri="@{signUpViewModel.imageProfileLiveData}"
             android:layout_width="@dimen/dp_128"
             android:layout_height="@dimen/dp_128"
             android:background="@color/colorIndigoPrimary"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="@id/flowInput"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +61,8 @@
             app:strokeWidth="@dimen/dp_2" />
 
         <ImageView
+            isVisible="@{signUpViewModel.imageProfileLiveData == null}"
+            onListenerPick="@{signUpViewModel.listenerPick}"
             android:layout_width="@dimen/dp_64"
             android:layout_height="@dimen/dp_64"
             android:src="@drawable/ic_photo_camera_24"
@@ -70,6 +75,7 @@
 
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flowInput"
+            isVisible="@{!signUpViewModel.isLoading()}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
@@ -81,9 +87,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewSubtitleSignUp" />
 
+        <com.airbnb.lottie.LottieAnimationView
+            isVisible="@{signUpViewModel.isLoading()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/flowInput"
+            app:layout_constraintEnd_toEndOf="@id/flowInput"
+            app:layout_constraintStart_toStartOf="@id/flowInput"
+            app:layout_constraintTop_toTopOf="@id/flowInput"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/anim_loading" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutEmail"
             style="@style/Widget.Demo.TextInputLayout"
+            onEmailError="@{signUpViewModel.emailLiveData}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -96,12 +115,14 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/msg_hint_email"
                 android:inputType="textEmailAddress"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:text="@={signUpViewModel.emailLiveData}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutPassword"
             style="@style/Widget.Demo.TextInputLayout"
+            onPasswordError="@{signUpViewModel.passwordLiveData}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -109,16 +130,19 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputTextPassword"
+                android:id="@+id/inputTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/msg_hint_password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="@={signUpViewModel.passwordLiveData}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutConfirmPassword"
             style="@style/Widget.Demo.TextInputLayout"
+            inputPassword="@{inputTextPassword}"
+            onErrorConfirmPass="@{signUpViewModel.confirmPasswordLiveData}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
@@ -127,15 +151,21 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputTextConfirmPassword"
+                android:id="@+id/inputTextConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/msg_hint_confirm_password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="@={signUpViewModel.confirmPasswordLiveData}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButtonLogin"
+            android:id="@+id/materialButtonSignUp"
+            inputConfirmPass="@{inputTextConfirmPassword}"
+            inputEmail="@{inputEditTextEmail}"
+            inputPassword="@{inputTextPassword}"
+            isVisible="@{!signUpViewModel.isLoading()}"
+            onListenerRegister="@{signUpViewModel.listenerRegister}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
@@ -155,7 +185,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_16"
-            app:constraint_referenced_ids="textViewDescription, textViewDescriptionRoute"
+            app:constraint_referenced_ids="textViewDescription, textViewSignInRoute"
             app:flow_horizontalStyle="packed"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -171,7 +201,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textViewDescriptionRoute"
+            android:id="@+id/textViewSignInRoute"
             style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
