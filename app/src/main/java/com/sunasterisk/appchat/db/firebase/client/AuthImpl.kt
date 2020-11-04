@@ -12,8 +12,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.sunasterisk.appchat.db.Result
 import com.sunasterisk.appchat.db.entity.User
 import com.sunasterisk.appchat.db.firebase.RemoteConstant.COLLECTION_USER
-import com.sunasterisk.appchat.db.firebase.RemoteConstant.EMAIL_NOT_VERIFIED
-import com.sunasterisk.appchat.db.firebase.RemoteConstant.MSG_EMAIL_NOT_VERIFIED
 import com.sunasterisk.appchat.db.firebase.RemoteConstant.MSG_USER_HAS_BEEN_EXISTED
 import com.sunasterisk.appchat.db.firebase.service.AuthService
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -33,13 +31,7 @@ class AuthImpl(
     override fun logIn(username: String, password: String) =
         flow {
             firebaseAuth.signInWithEmailAndPassword(username, password).await().run {
-                if (user?.isEmailVerified == false) {
-                    val throwable =
-                        FirebaseAuthEmailException(EMAIL_NOT_VERIFIED, MSG_EMAIL_NOT_VERIFIED)
-                    error(throwable)
-                } else {
-                    emit(Result.Success(this))
-                }
+                emit(Result.Success(this))
             }
         }
 

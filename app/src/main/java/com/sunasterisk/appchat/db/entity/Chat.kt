@@ -10,6 +10,8 @@ data class Chat(
     @PrimaryKey
     @ColumnInfo(name = "chat_id")
     var chatId: String = "",
+    @ColumnInfo(name = "from_image_url")
+    var fromImageUrl: String = "",
     @Ignore
     val memberIds: List<String> = emptyList(),
     @Embedded

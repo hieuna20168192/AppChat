@@ -3,11 +3,15 @@ package com.sunasterisk.appchat.base
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
-abstract class BaseAdapter<T, VH: BaseViewHolder<T>>(
+abstract class BaseAdapter<T, VH : BaseViewHolder<T>>(
     diffUtil: DiffUtil.ItemCallback<T>
-) : ListAdapter<T, VH>(diffUtil) {
+) : ListAdapter<T, VH>(diffUtil), ListBinder<List<T>> {
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.bindData(getItem(position))
+    }
+
+    override fun setData(data: List<T>?) {
+        submitList(data)
     }
 }

@@ -16,26 +16,29 @@ class ClientRepository(
 ) : Repository.ClientRepository {
 
     override fun getChats(userId: String): Flow<Result<List<Chat>>> =
-        userDao.getUserWithChats(userId).flatMapLatest { userWithChats ->
-            if (userWithChats.chats.isNotEmpty()) {
-                flow {
-                    emit(Result.success(userWithChats.chats))
-                }
-            } else {
-                clientService.getChats(userId).onEach { chatListResult ->
-                    if (chatListResult is Result.Success) {
-                        chatListResult.data.asFlow().buffer()
-                            .onEach { chat ->
-                                val userChatCrossRef =
-                                    UserChatCrossRef(userId = userId, chatId = chat.chatId)
-                                chatDao.insertChat(chat)
-                                userDao.insert(userChatCrossRef)
-                            }
-                            .collect()
+        userDao.getUserWithChats()
+            .flatMapLatest { userWithChats ->
+                if (userWithChats.any { it.user.userId == userId && it.chats.isNotEmpty() }) {
+                    flow {
+                        val result =
+                            Result.success(userWithChats.first { it.user.userId == userId }.chats)
+                        emit(result)
+                    }
+                } else {
+                    clientService.getChats(userId).onEach { chatListResult ->
+                        if (chatListResult is Result.Success) {
+                            chatListResult.data.asFlow().buffer()
+                                .onEach { chat ->
+                                    val userChatCrossRef =
+                                        UserChatCrossRef(userId = userId, chatId = chat.chatId)
+                                    chatDao.insertChat(chat)
+                                    userDao.insert(userChatCrossRef)
+                                }
+                                .collect()
+                        }
                     }
                 }
             }
-        }
 
     override fun getGroups(userId: String): Flow<Result<List<Group>>> =
         userDao.getUserWithGroups(userId).flatMapLatest { userWithGroups ->

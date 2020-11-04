@@ -46,9 +46,11 @@ class SignInViewModel(
     }
 
     private fun loginWithEmailAndPassword(email: String, password: String) {
-        _isError.value = ""
-        _isLoading.value = true
         authRepository.logIn(email, password)
+            .onStart {
+                _isError.value = ""
+                _isLoading.value = true
+            }
             .onEach { authResult ->
                 if (authResult is Result.Success) {
                     signInNavigator?.onSignInSuccess()
@@ -64,9 +66,11 @@ class SignInViewModel(
     }
 
     fun signInWithGoogle(task: Task<GoogleSignInAccount>) {
-        _isError.postValue("")
-        _isLoading.value = true
         authRepository.signInWithGoogle(task)
+            .onStart {
+                _isError.postValue("")
+                _isLoading.value = true
+            }
             .onEach { authResult ->
                 if (authResult is Result.Success) {
                     signInNavigator?.onSignInSuccess(authResult.data)
@@ -84,10 +88,12 @@ class SignInViewModel(
     }
 
     private fun loginWithFacebook(tokenResult: Result<AccessToken>) {
-        _isError.postValue("")
-        _isLoading.value = true
         if (tokenResult is Result.Success) {
             authRepository.loginWithFacebook(tokenResult.data)
+                .onStart {
+                    _isError.postValue("")
+                    _isLoading.value = true
+                }
                 .onEach { authResult ->
                     if (authResult is Result.Success) {
                         signInNavigator?.onSignInSuccess(authResult.data)

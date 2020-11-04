@@ -10,10 +10,7 @@ import com.sunasterisk.appchat.base.BaseViewModel
 import com.sunasterisk.appchat.db.Result
 import com.sunasterisk.appchat.db.repository.Repository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 
 @ExperimentalCoroutinesApi
 class SignUpViewModel(
@@ -45,14 +42,16 @@ class SignUpViewModel(
     }
 
     private fun register(email: String, password: String) {
-        _isLoading.value = true
-        _isError.postValue("")
         val imageUri = imageProfileLiveData.value
             ?: Uri.parse(
                 "android.resource://" + App.getContext().packageName
                         + "/" + R.drawable.img_default_profile
             )
         authRepository.register(email, password, imageUri)
+            .onStart {
+                _isLoading.value = true
+                _isError.postValue("")
+            }
             .onEach { authResult ->
                 if (authResult is Result.Success) {
                     signUpNavigator?.onRegisterSuccess(authResult.data)

@@ -31,6 +31,7 @@ class AuthRepository(
     ): Flow<Result<User>> =
         authService.register(username, password, selectedPhotoUri).onEach { authUser ->
             if (authUser is Result.Success) {
+                UserPref.saveUserId(authUser.data.userId)
                 userDao.insert(authUser.data)
             }
         }
@@ -38,6 +39,7 @@ class AuthRepository(
     override fun signInWithGoogle(task: Task<GoogleSignInAccount>): Flow<Result<User>> =
         authService.signInWithGoogle(task).onEach { authUser ->
             if (authUser is Result.Success) {
+                UserPref.saveUserId(authUser.data.userId)
                 userDao.insert(authUser.data)
             }
         }
@@ -45,6 +47,7 @@ class AuthRepository(
     override fun loginWithFacebook(token: AccessToken): Flow<Result<User>> =
         authService.loginWithFacebook(token).onEach { authUser ->
             if (authUser is Result.Success) {
+                UserPref.saveUserId(authUser.data.userId)
                 userDao.insert(authUser.data)
             }
         }

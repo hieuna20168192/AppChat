@@ -5,15 +5,20 @@
 
     <data>
 
+        <variable
+            name="chatViewModel"
+            type="com.sunasterisk.appchat.ui.chat.ChatViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        showError="@{chatViewModel.isError()}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorIndigoPrimary"
         tools:context=".ui.chat.ChatFragment">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayoutChatHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorIndigoPrimary"
@@ -30,31 +35,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.appbar.MaterialToolbar
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchViewChats"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/imageViewSearchAction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:padding="@dimen/dp_16"
-                        android:src="@drawable/ic_search"
-                        tools:ignore="ContentDescription" />
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
-                        android:hint="@string/title_hint_search"
-                        android:imeOptions="flagNoExtractUi|actionSearch"
-                        android:inputType="textNoSuggestions"
-                        android:maxLines="@integer/integer_1"
-                        android:paddingLeft="@dimen/dp_8"
-                        android:paddingRight="@dimen/dp_8" />
-                </com.google.android.material.appbar.MaterialToolbar>
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="@string/title_hint_search"
+                    android:imeOptions="flagNoExtractUi|actionSearch"
+                    android:inputType="textNoSuggestions"
+                    android:maxLines="@integer/integer_1" />
             </com.google.android.material.card.MaterialCardView>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -71,6 +61,7 @@
                 <TextView
                     android:id="@+id/textViewChatTitle"
                     style="@style/TextAppearance.MaterialComponents.Headline4"
+                    isVisible="@{!chatViewModel.isEmptyLiveData()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_16"
@@ -81,6 +72,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewChatList"
+                    isVisible="@{!chatViewModel.isEmptyLiveData()}"
+                    notifyListChange="@{chatViewModel.chatsLiveData}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_16"
@@ -93,5 +86,14 @@
                     tools:listitem="@layout/item_chat" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <com.airbnb.lottie.LottieAnimationView
+            isVisible="@{chatViewModel.isEmptyLiveData()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/anim_empty" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
