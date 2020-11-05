@@ -39,5 +39,6 @@
     <plurals name="last_message_chat_id">
         <item quantity="other">%1$s_recent_message</item>
     </plurals>
+    <string name="msg_compose_hint">Write a message...</string>
 
 </resources>

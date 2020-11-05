@@ -13,6 +13,7 @@ fun ImageView.setImage(imageUrl: String?) {
     }
 }
 
+@Suppress("UNCHECKED_CAST")
 @BindingAdapter("notifyListChange")
 fun <T> RecyclerView.notifyListChange(newList: List<T>?) {
     (adapter as ListBinder<List<T>>).setData(newList)
